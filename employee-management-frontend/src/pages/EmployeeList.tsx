@@ -112,12 +112,12 @@ const EmployeeList = () => {
                   <TableCell>{employee.course}</TableCell>
 
                   <TableCell>
-                    <Button
+                    {/* <Button
                       color="primary"
                       onClick={() => handleEdit(employee)}
                     >
                       Edit
-                    </Button>
+                    </Button> */}
                     <Button
                       color="error"
                       onClick={() => handleDelete(employee._id)}
