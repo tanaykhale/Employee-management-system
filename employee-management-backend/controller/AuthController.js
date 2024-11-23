@@ -67,20 +67,8 @@ const login = async (req, res) => {
 }
 const employee = async (req, res) => {
     try {
-        const { name, email, mobile, designation, gender, courses } = req.body;
-
-        // Create and save a new employee
-        const newEmployee = new EmployeeModel({
-            name,
-            email,
-            mobile,
-            designation,
-            gender,
-            courses,
-        });
+        const newEmployee = new EmployeeModel(req.body)
         await newEmployee.save();
-
-        // Fetch all employees from the database
         const employees = await EmployeeModel.find();
 
         res.status(200).json({

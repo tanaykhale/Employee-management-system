@@ -14,6 +14,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const EnterEmployee = () => {
   const [formData, setFormData] = useState({
@@ -41,9 +42,8 @@ const EnterEmployee = () => {
     console.log(formData);
     const updatedFormData = {
       ...formData,
-      courses: formData.courses.split(",").map((course) => course.trim()), // Convert comma-separated string to an array
+      course: formData.courses, // Map 'courses' to 'course' for backend
     };
-
     try {
       const url = `http://localhost:8080/details`;
       const response = await fetch(url, {
@@ -54,21 +54,24 @@ const EnterEmployee = () => {
         body: JSON.stringify(updatedFormData),
       });
 
-      // Check if response is OK (status 200-299)
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      // Try to parse response as JSON
       const result = await response.json();
 
       const { success, message, error } = result;
 
       if (success) {
-        console.log("Data sent to Mongo server");
-        // setTimeout(() => {
-        //   navigate("admin");
-        // }, 1000);
+        toast.success("Data sent to Mongo server", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
       } else if (error) {
         const details = error?.details[0].message;
         console.log(details);
@@ -78,7 +81,6 @@ const EnterEmployee = () => {
 
       console.log(result);
     } catch (error: unknown) {
-      // Catch network errors or other unexpected errors
       console.log("Error during submission:", error);
     }
   };
@@ -107,7 +109,6 @@ const EnterEmployee = () => {
         Create
       </Typography>
       <form onSubmit={handleSubmit}>
-        {/* Name */}
         <TextField
           fullWidth
           label="Name"
@@ -117,7 +118,6 @@ const EnterEmployee = () => {
           margin="normal"
         />
 
-        {/* Email */}
         <TextField
           fullWidth
           label="Email"
@@ -127,7 +127,6 @@ const EnterEmployee = () => {
           margin="normal"
         />
 
-        {/* Mobile Number */}
         <TextField
           fullWidth
           label="Mobile No"
@@ -137,7 +136,6 @@ const EnterEmployee = () => {
           margin="normal"
         />
 
-        {/* Designation */}
         <FormControl fullWidth margin="normal">
           <InputLabel id="designation-label">Designation</InputLabel>
           <Select
@@ -154,7 +152,6 @@ const EnterEmployee = () => {
           </Select>
         </FormControl>
 
-        {/* Gender */}
         <FormControl component="fieldset" margin="normal">
           <FormLabel component="legend">Gender</FormLabel>
           <RadioGroup
@@ -168,7 +165,6 @@ const EnterEmployee = () => {
           </RadioGroup>
         </FormControl>
 
-        {/* Courses */}
         <FormControl component="fieldset" margin="normal">
           <FormLabel component="legend">Course</FormLabel>
           <Box>
@@ -176,7 +172,7 @@ const EnterEmployee = () => {
               control={
                 <Checkbox
                   value="MCA"
-                  checked={formData.courses.includes("MCA")}
+                  checked={formData.courses === "MCA"} // Compare the value for single selection
                   onChange={handleCheckboxChange}
                 />
               }
@@ -186,7 +182,7 @@ const EnterEmployee = () => {
               control={
                 <Checkbox
                   value="BCA"
-                  checked={formData.courses.includes("BCA")}
+                  checked={formData.courses === "BCA"}
                   onChange={handleCheckboxChange}
                 />
               }
@@ -196,7 +192,7 @@ const EnterEmployee = () => {
               control={
                 <Checkbox
                   value="BSC"
-                  checked={formData.courses.includes("BSC")}
+                  checked={formData.courses === "BSC"}
                   onChange={handleCheckboxChange}
                 />
               }
@@ -205,7 +201,6 @@ const EnterEmployee = () => {
           </Box>
         </FormControl>
 
-        {/* Submit Button */}
         <Button
           type="submit"
           variant="contained"

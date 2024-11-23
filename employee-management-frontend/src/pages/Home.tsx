@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { handleSuccess } from "../utils";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   AppBar,
   Box,
@@ -56,7 +57,7 @@ function Home() {
               Home
             </MuiLink>
             <MuiLink
-              href="/display"
+              href="/home/display"
               underline="none"
               sx={{
                 color: "white",
@@ -96,7 +97,22 @@ function Home() {
       </AppBar>
 
       <Outlet></Outlet>
-      <ToastContainer />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        style={{
+          fontSize: "14px",
+          textAlign: "center",
+        }}
+      />
     </div>
   );
 }

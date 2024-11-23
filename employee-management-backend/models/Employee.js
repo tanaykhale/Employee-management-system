@@ -1,4 +1,4 @@
-const { required } = require('joi');
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -26,8 +26,9 @@ const EmployeeSchema = new Schema({
         required: true,
     },
     course: {
-        type: [String],
+        type: String,
         required: true,
+        default: "Not specified",
     }
 })
 const EmployeeModel = mongoose.model('employees', EmployeeSchema)

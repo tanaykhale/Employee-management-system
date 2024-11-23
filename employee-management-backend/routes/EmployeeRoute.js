@@ -6,22 +6,8 @@ const router = express.Router();
 // POST route to save employee data
 router.post("/", async (req, res) => {
     try {
-        const { name, email, mobile, designation, gender, courses } = req.body;
-
-        // Create new employee document
-        const newEmployee = new Employee({
-            name,
-            email,
-            mobile,
-            designation,
-            gender,
-            courses,
-        });
-
-        // Save the document to the database
+        const newEmployee = new Employee(req.body);
         await newEmployee.save();
-
-        // Respond with success message
         res.json({ success: true, message: "Employee data saved successfully" });
     } catch (error) {
         console.error(error);
@@ -40,5 +26,20 @@ router.get("/", async (req, res) => {
         res.status(500).json({ success: false, message: "Error retrieving employee data", error });
     }
 });
+router.delete('/details/:id', async (req, res) => {
+    console.log("Delete request received for ID:", req);
+    try {
+        const { id } = req.params;
+        const deletedEmployee = await Employee.remove({ _id: id });
+        console.log(deletedEmployee)
+        if (!deletedEmployee) {
+            return res.status(404).json({ success: false, message: "Employee not found" });
+        }
 
+        res.status(200).json({ success: true, message: "Employee deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting employee:", error);
+        res.status(500).json({ success: false, message: "Server error", error });
+    }
+});
 module.exports = router;
