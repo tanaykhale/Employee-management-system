@@ -29,7 +29,7 @@ const EmployeeList = () => {
         }
 
         const data = await response.json();
-        setEmployees(data.employees || []); // Adjust for API response
+        setEmployees(data.employees || []);
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -134,9 +134,9 @@ const EmployeeList = () => {
     </Box>
   );
 
-  function handleEdit(employee) {
-    console.log("Edit employee:", employee);
-  }
+  // function handleEdit(employee) {
+  //   console.log("Edit employee:", employee);
+  // }
 };
 
 export default EmployeeList;

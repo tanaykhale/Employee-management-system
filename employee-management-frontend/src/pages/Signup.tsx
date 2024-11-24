@@ -9,8 +9,12 @@ import {
   Box,
   TextField,
   Button,
+  InputAdornment,
   Link as MuiLink,
+  IconButton,
 } from "@mui/material";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function Signup() {
   const [signupInfo, setSignupInfo] = useState({
@@ -19,6 +23,7 @@ function Signup() {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -137,10 +142,21 @@ function Signup() {
               value={signupInfo.password}
               fullWidth
               InputProps={{
-                style: { fontSize: 16 },
-              }}
-              InputLabelProps={{
-                style: { fontSize: 14 },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <RemoveRedEyeIcon />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
           </Box>
